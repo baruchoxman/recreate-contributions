@@ -65,10 +65,9 @@ def get_contrib_dates_from_query_res(query_res):
             )
 
 
-def get_all_contib_dates(username_to_copy_from, start_date, api_key):
-    today = datetime.date.today()
+def get_all_contib_dates(username_to_copy_from, start_date, final_date, api_key):
     contrib_dates = []
-    while start_date <= today:
+    while start_date <= final_date:
         end_date = start_date + datetime.timedelta(days=365)
         query = QUERY_TEMPLATE % (
             username_to_copy_from,
@@ -157,7 +156,8 @@ def recreate_contibutions(
     start_date = datetime.date.fromisoformat(start_date)
     repo = repo or "contrib-copy-{}".format(username_to_copy_from)
 
-    contrib_dates = get_all_contib_dates(username_to_copy_from, start_date, api_token)
+    contrib_dates = get_all_contib_dates(
+        username_to_copy_from, start_date, datetime.date.today(), api_token)
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 
