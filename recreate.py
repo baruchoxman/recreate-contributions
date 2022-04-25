@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import enum
 import os
@@ -81,11 +82,6 @@ def get_all_contib_dates(username_to_copy_from, start_date, api_key):
     return contrib_dates
 
 
-def request_user_input(prompt="> "):
-    """Request input from the user and return what has been entered."""
-    return input(prompt)
-
-
 def fake_it(contrib_dates, username, repo, shell):
     template_bash = (
         "#!/usr/bin/env bash\n"
@@ -154,30 +150,10 @@ def save(output, filename):
     os.chmod(filename, 0o755)  # add execute permissions
 
 
-def main():
-    current_username = request_user_input("Enter the GitHub username to update: ")
+def recreate_contibutions(current_username, username_to_copy_from, start_date, api_token,repo):
 
-    username_to_copy_from = request_user_input(
-        "Enter the GitHub username to copy contributions from: "
-    )
-
-    start_date = request_user_input(
-        "Enter the start date for copying contributions (YYYY-MM-DD): "
-    )
     start_date = datetime.date.fromisoformat(start_date)
-
-    api_token = request_user_input(
-        "Enter the API token for github "
-        "(create at https://github.com/settings/tokens): "
-    )
-
-    default_repo_name = "contrib-copy-{}".format(username_to_copy_from)
-    repo = request_user_input(
-        "Enter the name of the repository to use (default: {}): ".format(
-            default_repo_name
-        )
-    )
-    repo = repo or default_repo_name
+    repo = repo or "contrib-copy-{}".format(username_to_copy_from)
 
     contrib_dates = get_all_contib_dates(username_to_copy_from, start_date, api_token)
 
@@ -187,10 +163,27 @@ def main():
     save(output, output_filename)
     print("{} saved.".format(output_filename))
     print(
-        "Create a new(!) repo named {0} at {1} and run the script".format(
+        "Create a new(!) repo named {0} at {1} and run the generated script".format(
             repo, GITHUB_BASE_URL
         )
     )
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Recreate contributions")
+    parser.add_argument("-u", "--username", required=True, help="GitHub username to update")
+    parser.add_argument("-s", "--source", required=True, help="Source GitHub username to copy contributions from")
+    parser.add_argument("-d", "--date", required=True, help="Start date for copying contributions (YYYY-MM-DD)")
+    parser.add_argument(
+        "-t", "--apitoken", required=True,
+        help="API token for github (create at https://github.com/settings/tokens)")
+    parser.add_argument(
+        "-r", "--repo",
+        help='Repository to use (will use "contrib-copy-<source username>" if not provided')
+    arguments = parser.parse_args()
+
+    recreate_contibutions(
+        arguments.username, arguments.source, arguments.date, arguments.apitoken, arguments.repo)
 
 
 if __name__ == "__main__":
