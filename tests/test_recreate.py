@@ -7,14 +7,14 @@ import pytest
     "shell,expected",
     [
         (
-            "bash",
+            recreate.Shells.BASH,
             "GIT_AUTHOR_DATE=2020-01-01T12:00:00 "
             "GIT_COMMITTER_DATE=2020-01-01T12:00:00 "
             "git commit --allow-empty -m "
             '"recreating contributions" > /dev/null\n',
         ),
         (
-            "powershell",
+            recreate.Shells.POWERSHELL,
             '$Env:GIT_AUTHOR_DATE="2020-01-01T12:00:00"\n'
             '$Env:GIT_COMMITTER_DATE="2020-01-01T12:00:00"\n'
             "git commit --allow-empty -m "
@@ -32,7 +32,7 @@ def test_commit(shell, expected):
     "shell,expected",
     [
         (
-            "bash",
+            recreate.Shells.BASH,
             "#!/usr/bin/env bash\n"
             "REPO=testrepo\n"
             "git init $REPO\n"
@@ -52,7 +52,7 @@ def test_commit(shell, expected):
             "git push -u origin main\n",
         ),
         (
-            "powershell",
+            recreate.Shells.POWERSHELL,
             "cd $PSScriptRoot\n"
             '$REPO="testrepo"\n'
             "git init $REPO\n"

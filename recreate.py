@@ -1,4 +1,5 @@
 import datetime
+import enum
 import os
 import requests
 import platform
@@ -27,11 +28,16 @@ QUERY_TEMPLATE = """
 """
 
 
-SHELLS = {
-    "bash": "sh",
-    "powershell": "ps1",
+class Shells(enum.Enum):
+    BASH = "bash"
+    POWERSHELL = "powershell"
+
+
+SHELL_SUFFIX = {
+    Shells.BASH: "sh",
+    Shells.POWERSHELL: "ps1",
 }
-SHELL = "powershell" if platform.system() == "Windows" else "bash"
+SHELL = Shells.POWERSHELL if platform.system() == "Windows" else Shells.BASH
 
 
 def run_github_query(query, api_key):
@@ -109,7 +115,7 @@ def fake_it(contrib_dates, username, repo, shell):
         "git push -u origin main\n"
     )
 
-    template = template_bash if shell == "bash" else template_powershell
+    template = template_bash if shell == Shells.BASH else template_powershell
 
     strings = []
     for date, value in contrib_dates:
@@ -134,7 +140,7 @@ def commit(commitdate, shell):
         """"recreating contributions" | Out-Null\n"""
     )
 
-    template = template_bash if shell == "bash" else template_powershell
+    template = template_bash if shell == Shells.BASH else template_powershell
 
     commit_dt = datetime.datetime.combine(commitdate, datetime.time(12, 0, 0))
 
@@ -177,7 +183,7 @@ def main():
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 
-    output_filename = "recreate_contributions.{}".format(SHELLS[SHELL])
+    output_filename = "recreate_contributions.{}".format(SHELL_SUFFIX[SHELL])
     save(output, output_filename)
     print("{} saved.".format(output_filename))
     print(
