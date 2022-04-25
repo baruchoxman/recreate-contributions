@@ -8,14 +8,17 @@ import pytest
     [
         (
             "bash",
-            "GIT_AUTHOR_DATE=2020-01-01T12:00:00 GIT_COMMITTER_DATE=2020-01-01T12:00:00 "
-            'git commit --allow-empty -m "recreating contributions" > /dev/null\n',
+            "GIT_AUTHOR_DATE=2020-01-01T12:00:00 "
+            "GIT_COMMITTER_DATE=2020-01-01T12:00:00 "
+            "git commit --allow-empty -m "
+            '"recreating contributions" > /dev/null\n',
         ),
         (
             "powershell",
             '$Env:GIT_AUTHOR_DATE="2020-01-01T12:00:00"\n'
             '$Env:GIT_COMMITTER_DATE="2020-01-01T12:00:00"\n'
-            'git commit --allow-empty -m "recreating contributions" | Out-Null\n',
+            "git commit --allow-empty -m "
+            '"recreating contributions" | Out-Null\n',
         ),
     ],
 )

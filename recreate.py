@@ -7,17 +7,16 @@ GITHUB_BASE_URL = "https://github.com/"
 GIT_URL = "git@github.com"
 QUERY_API_URL = "https://api.github.com/graphql"
 
-# The GraphQL query (with a few aditional bits included) itself defined as a multi-line string.
 QUERY_TEMPLATE = """
-{ 
+{
   user(login: "%s") {
     contributionsCollection(from: "%sT00:00:00Z", to: "%sT00:00:00Z") {
       contributionCalendar {
         totalContributions
         weeks {
           contributionDays {
-            date 
-            contributionCount 
+            date
+            contributionCount
           }
         }
       }
@@ -46,7 +45,6 @@ def run_github_query(query, api_key):
 
 
 def get_contrib_dates_from_query_res(query_res):
-    contrib_dates = []
     contrib_weeks = query_res["data"]["user"]["contributionsCollection"][
         "contributionCalendar"
     ]["weeks"]
@@ -128,12 +126,14 @@ def fake_it(contrib_dates, username, repo, shell):
 def commit(commitdate, shell):
     template_bash = (
         """GIT_AUTHOR_DATE={0} GIT_COMMITTER_DATE={1} """
-        """git commit --allow-empty -m "recreating contributions" > /dev/null\n"""
+        """git commit --allow-empty -m """
+        """"recreating contributions" > /dev/null\n"""
     )
 
     template_powershell = (
         """$Env:GIT_AUTHOR_DATE="{0}"\n$Env:GIT_COMMITTER_DATE="{1}"\n"""
-        """git commit --allow-empty -m "recreating contributions" | Out-Null\n"""
+        """git commit --allow-empty -m """
+        """"recreating contributions" | Out-Null\n"""
     )
 
     template = template_bash if shell == "bash" else template_powershell
@@ -163,7 +163,8 @@ def main():
     start_date = datetime.date.fromisoformat(start_date)
 
     api_token = request_user_input(
-        "Enter the API token for github (create at https://github.com/settings/tokens): "
+        "Enter the API token for github "
+        "(create at https://github.com/settings/tokens): "
     )
 
     default_repo_name = "contrib-copy-{}".format(username_to_copy_from)
