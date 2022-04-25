@@ -150,7 +150,7 @@ def save(output, filename):
     os.chmod(filename, 0o755)  # add execute permissions
 
 
-def recreate_contibutions(current_username, username_to_copy_from, start_date, api_token,repo):
+def recreate_contibutions(current_username, username_to_copy_from, start_date, api_token, repo):
 
     start_date = datetime.date.fromisoformat(start_date)
     repo = repo or "contrib-copy-{}".format(username_to_copy_from)
@@ -172,8 +172,10 @@ def recreate_contibutions(current_username, username_to_copy_from, start_date, a
 def main():
     parser = argparse.ArgumentParser(description="Recreate contributions")
     parser.add_argument("-u", "--username", required=True, help="GitHub username to update")
-    parser.add_argument("-s", "--source", required=True, help="Source GitHub username to copy contributions from")
-    parser.add_argument("-d", "--date", required=True, help="Start date for copying contributions (YYYY-MM-DD)")
+    parser.add_argument(
+        "-s", "--source", required=True, help="Source GitHub username to copy contributions from")
+    parser.add_argument(
+        "-d", "--date", required=True, help="Start date for copying contributions (YYYY-MM-DD)")
     parser.add_argument(
         "-t", "--apitoken", required=True,
         help="API token for github (create at https://github.com/settings/tokens)")
