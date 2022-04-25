@@ -87,3 +87,51 @@ def test_fake_it(shell, expected):
         shell,
     )
     assert res == expected
+
+
+def test_get_contrib_dates_from_query_res():
+    QUERY_RESULT = {
+        "data": {
+            "user": {
+                "contributionsCollection": {
+                    "contributionCalendar": {
+                        "totalContributions": 53,
+                        "weeks": [
+                            {
+                                "contributionDays": [
+                                    {"date": "2013-04-01", "contributionCount": 0},
+                                    {"date": "2013-04-02", "contributionCount": 0},
+                                    {"date": "2013-04-03", "contributionCount": 1},
+                                    {"date": "2013-04-04", "contributionCount": 5},
+                                    {"date": "2013-04-05", "contributionCount": 0},
+                                    {"date": "2013-04-06", "contributionCount": 0},
+                                ]
+                            },
+                            {
+                                "contributionDays": [
+                                    {"date": "2013-04-07", "contributionCount": 13},
+                                    {"date": "2013-04-08", "contributionCount": 15},
+                                    {"date": "2013-04-09", "contributionCount": 10},
+                                    {"date": "2013-04-10", "contributionCount": 9},
+                                ]
+                            },
+                        ],
+                    }
+                }
+            }
+        }
+    }
+    expected_result = [
+        (datetime.date(2013, 4, 1), 0),
+        (datetime.date(2013, 4, 2), 0),
+        (datetime.date(2013, 4, 3), 1),
+        (datetime.date(2013, 4, 4), 5),
+        (datetime.date(2013, 4, 5), 0),
+        (datetime.date(2013, 4, 6), 0),
+        (datetime.date(2013, 4, 7), 13),
+        (datetime.date(2013, 4, 8), 15),
+        (datetime.date(2013, 4, 9), 10),
+        (datetime.date(2013, 4, 10), 9),
+    ]
+    res = recreate.get_contrib_dates_from_query_res(QUERY_RESULT)
+    assert list(res) == expected_result
