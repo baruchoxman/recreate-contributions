@@ -28,8 +28,7 @@ jobs:
         run: |
           flake8 . --max-line-length=100 --count --show-source --statistics
       - name: Lint with black
-        run: |
-          black .
+        - uses: psf/black@stable
       - name: Test with pytest
         run: |
           pytest --cov=. --cov-branch --cov-report=xml
