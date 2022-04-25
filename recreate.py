@@ -78,10 +78,6 @@ def request_user_input(prompt="> "):
     return input(prompt)
 
 
-def date_from_str(dt):
-    return datetime.datetime.strptime(dt, "%Y-%m-%d")
-
-
 def fake_it(contrib_dates, username, repo, shell):
     template_bash = (
         "#!/usr/bin/env bash\n"
