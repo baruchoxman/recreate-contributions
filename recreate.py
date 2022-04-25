@@ -1,6 +1,7 @@
 import datetime
 import os
 import requests
+import platform
 
 
 GITHUB_BASE_URL = "https://github.com/"
@@ -30,6 +31,7 @@ SHELLS = {
     "bash": "sh",
     "powershell": "ps1",
 }
+SHELL = "powershell" if platform.system() == "Windows" else "bash"
 
 
 def run_github_query(query, api_key):
@@ -171,18 +173,11 @@ def main():
     )
     repo = repo or default_repo_name
 
-    shells_keys = frozenset(SHELLS.keys())
-    shell = ""
-    while shell not in shells_keys:
-        shell = request_user_input(
-            "Enter the target shell ({}): ".format(" or ".join(sorted(shells_keys)))
-        )
-
     contrib_dates = get_all_contib_dates(username_to_copy_from, start_date, api_token)
 
-    output = fake_it(contrib_dates, current_username, repo, "bash")
+    output = fake_it(contrib_dates, current_username, repo, SHELL)
 
-    output_filename = "recreate_contributions.{}".format(SHELLS[shell])
+    output_filename = "recreate_contributions.{}".format(SHELLS[SHELL])
     save(output, output_filename)
     print("{} saved.".format(output_filename))
     print(
