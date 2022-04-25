@@ -1,4 +1,4 @@
-name: recreate-contributions
+name: Test
 
 on: [push]
 
