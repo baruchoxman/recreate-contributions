@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.10"
+  - "nightly"
+install:
+  - "pip install pytest"
+script:
+  - "py.test tests"
+sudo: false
+notifications:
+  email: false
