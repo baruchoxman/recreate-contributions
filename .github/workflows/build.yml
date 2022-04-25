@@ -35,4 +35,3 @@ jobs:
           pytest --cov=.
       - name: Codecov
         uses: codecov/codecov-action@v3.1.0
-        fail_ci_if_error: true
