@@ -1,6 +1,7 @@
-import recreate
 import datetime
 import pytest
+
+import recreate
 
 
 @pytest.mark.parametrize(
@@ -90,7 +91,7 @@ def test_fake_it(shell, expected):
 
 
 def test_get_contrib_dates_from_query_res():
-    QUERY_RESULT = {
+    query_result = {
         "data": {
             "user": {
                 "contributionsCollection": {
@@ -133,5 +134,5 @@ def test_get_contrib_dates_from_query_res():
         (datetime.date(2013, 4, 9), 10),
         (datetime.date(2013, 4, 10), 9),
     ]
-    res = recreate.get_contrib_dates_from_query_res(QUERY_RESULT)
+    res = recreate.get_contrib_dates_from_query_res(query_result)
     assert list(res) == expected_result

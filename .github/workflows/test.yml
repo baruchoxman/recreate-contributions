@@ -29,6 +29,9 @@ jobs:
       - name: Lint with flake8
         run: |
           flake8 . --max-line-length=100 --count --show-source --statistics
+      - name: Lint with pylint
+        run: |
+          pylint *.py tests
       - name: Lint with black
         uses: psf/black@stable
       - name: Test with pytest

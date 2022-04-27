@@ -2,8 +2,8 @@ import argparse
 import datetime
 import enum
 import os
-import requests
 import platform
+import requests
 
 
 GITHUB_BASE_URL = "https://github.com/"
@@ -42,13 +42,11 @@ SHELL = Shells.POWERSHELL if platform.system() == "Windows" else Shells.BASH
 
 
 def run_github_query(query, api_key):
-    headers = {"Authorization": "Bearer {}".format(api_key)}
+    headers = {"Authorization": f"Bearer {api_key}"}
     request = requests.post(QUERY_API_URL, json={"query": query}, headers=headers)
     if request.status_code != 200:
         raise Exception(
-            "Query failed to run by returning code of {}. {}".format(
-                request.status_code, query
-            )
+            f"Query failed to run by returning code of {request.status_code}. {query}"
         )
     return request.json()
 
@@ -144,8 +142,8 @@ def commit(commitdate, shell):
 
 def save(output, filename):
     """Saves the list to a given filename"""
-    with open(filename, "w") as f:
-        f.write(output)
+    with open(filename, "w", encoding="utf-8") as output_file:
+        output_file.write(output)
     os.chmod(filename, 0o755)  # add execute permissions
 
 
@@ -154,20 +152,19 @@ def recreate_contibutions(
 ):
 
     start_date = datetime.date.fromisoformat(start_date)
-    repo = repo or "contrib-copy-{}".format(username_to_copy_from)
+    repo = repo or f"contrib-copy-{username_to_copy_from}"
 
     contrib_dates = get_all_contib_dates(
-        username_to_copy_from, start_date, datetime.date.today(), api_token)
+        username_to_copy_from, start_date, datetime.date.today(), api_token
+    )
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 
-    output_filename = "recreate_contributions.{}".format(SHELL_SUFFIX[SHELL])
+    output_filename = f"recreate_contributions.{SHELL_SUFFIX[SHELL]}"
     save(output, output_filename)
-    print("{} saved.".format(output_filename))
+    print(f"{output_filename} saved.")
     print(
-        "Create a new(!) repo named {0} at {1} and run the generated script".format(
-            repo, GITHUB_BASE_URL
-        )
+        f"Create a new(!) repo named {repo} at {GITHUB_BASE_URL} and run the generated script"
     )
 
 
