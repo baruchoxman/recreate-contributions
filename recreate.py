@@ -4,6 +4,7 @@ import enum
 import os
 import platform
 import requests
+from typing import Any, Iterator, List, Tuple
 
 
 GITHUB_BASE_URL = "https://github.com/"
@@ -43,7 +44,7 @@ SHELL_SUFFIX = {
 SHELL = Shells.POWERSHELL if platform.system() == "Windows" else Shells.BASH
 
 
-def run_github_query(query, api_key):
+def run_github_query(query: str, api_key: str) -> Any:
     headers = {"Authorization": f"Bearer {api_key}"}
     request = requests.post(QUERY_API_URL, json={"query": query}, headers=headers)
     if request.status_code != 200:
@@ -53,7 +54,9 @@ def run_github_query(query, api_key):
     return request.json()
 
 
-def get_contrib_dates_from_query_res(query_res):
+def get_contrib_dates_from_query_res(
+    query_res: Any,
+) -> Iterator[Tuple[datetime.date, int]]:
     contrib_weeks = query_res["data"]["user"]["contributionsCollection"][
         "contributionCalendar"
     ]["weeks"]
@@ -65,8 +68,13 @@ def get_contrib_dates_from_query_res(query_res):
             )
 
 
-def get_all_contib_dates(username_to_copy_from, start_date, final_date, api_key):
-    contrib_dates = []
+def get_all_contib_dates(
+    username_to_copy_from: str,
+    start_date: datetime.date,
+    final_date: datetime.date,
+    api_key: str,
+) -> List[Tuple[datetime.date, int]]:
+    contrib_dates: List[Tuple[datetime.date, int]] = []
     while start_date <= final_date:
         end_date = start_date + datetime.timedelta(days=CONTRIB_DATES_DELTA_IN_DAYS)
         query = QUERY_TEMPLATE % (
@@ -81,7 +89,12 @@ def get_all_contib_dates(username_to_copy_from, start_date, final_date, api_key)
     return contrib_dates
 
 
-def fake_it(contrib_dates, username, repo, shell):
+def fake_it(
+    contrib_dates: List[Tuple[datetime.date, int]],
+    username: str,
+    repo: str,
+    shell: Shells,
+) -> str:
     template_bash = (
         "#!/usr/bin/env bash\n"
         "REPO={0}\n"
@@ -122,7 +135,7 @@ def fake_it(contrib_dates, username, repo, shell):
     return template.format(repo, "".join(strings), GIT_URL, username)
 
 
-def commit(commitdate, shell):
+def commit(commitdate: datetime.date, shell: Shells) -> str:
     template_bash = (
         """GIT_AUTHOR_DATE={0} GIT_COMMITTER_DATE={1} """
         """git commit --allow-empty -m """
@@ -142,7 +155,7 @@ def commit(commitdate, shell):
     return template.format(commit_dt.isoformat(), commit_dt.isoformat())
 
 
-def save(output, filename):
+def save(output: str, filename: str) -> None:
     """Saves the list to a given filename"""
     with open(filename, "w", encoding="utf-8") as output_file:
         output_file.write(output)
@@ -150,14 +163,19 @@ def save(output, filename):
 
 
 def recreate_contibutions(
-    current_username, username_to_copy_from, start_date, api_token, repo
-):
-
-    start_date = datetime.date.fromisoformat(start_date)
+    current_username: str,
+    username_to_copy_from: str,
+    start_date: str,
+    api_token: str,
+    repo: str,
+) -> None:
     repo = repo or f"contrib-copy-{username_to_copy_from}"
 
     contrib_dates = get_all_contib_dates(
-        username_to_copy_from, start_date, datetime.date.today(), api_token
+        username_to_copy_from,
+        datetime.date.fromisoformat(start_date),
+        datetime.date.today(),
+        api_token,
     )
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
@@ -170,7 +188,7 @@ def recreate_contibutions(
     )
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Recreate contributions")
     parser.add_argument(
         "-u", "--username", required=True, help="GitHub username to update"
