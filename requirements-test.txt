@@ -9,4 +9,5 @@ pycodestyle
 pylint
 pytest
 pytest-cov
+pytest-socket
 responses
