@@ -172,6 +172,21 @@ def test_get_all_contrib_dates_two_chunks():
     assert len(responses.calls) == 2
 
 
+@responses.activate
+def test_get_all_contrib_dates_with_exception():
+    test_date = datetime.date.today()
+    responses.add(responses.POST, recreate.QUERY_API_URL, status=401, json={})
+    with pytest.raises(Exception) as exc_info:
+        recreate.get_all_contib_dates(
+            "dummy",
+            test_date,
+            test_date,
+            "dummy_key",
+        )
+    assert str(exc_info.value).startswith("Query failed to run by returning code of 401.")
+    assert len(responses.calls) == 1
+
+
 def _get_query_result_mock(start_date, num_of_dates):
     return {
         "data": {
