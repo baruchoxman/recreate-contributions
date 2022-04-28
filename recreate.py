@@ -28,6 +28,8 @@ QUERY_TEMPLATE = """
 }
 """
 
+CONTRIB_DATES_DELTA_IN_DAYS = 365
+
 
 class Shells(enum.Enum):
     BASH = "bash"
@@ -66,7 +68,7 @@ def get_contrib_dates_from_query_res(query_res):
 def get_all_contib_dates(username_to_copy_from, start_date, final_date, api_key):
     contrib_dates = []
     while start_date <= final_date:
-        end_date = start_date + datetime.timedelta(days=365)
+        end_date = start_date + datetime.timedelta(days=CONTRIB_DATES_DELTA_IN_DAYS)
         query = QUERY_TEMPLATE % (
             username_to_copy_from,
             start_date.isoformat(),
