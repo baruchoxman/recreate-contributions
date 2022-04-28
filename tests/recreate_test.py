@@ -1,7 +1,7 @@
 import datetime
+from typing import Any, Dict, List
 import pytest
 import responses
-from typing import Any, Dict, List
 
 import recreate
 

@@ -3,8 +3,8 @@ import datetime
 import enum
 import os
 import platform
-import requests
 from typing import Any, Iterator, List, Tuple
+import requests
 
 
 GITHUB_BASE_URL = "https://github.com/"
