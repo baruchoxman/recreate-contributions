@@ -1,8 +1,8 @@
 import datetime
 import pytest
+import responses
 
 import recreate
-import responses
 
 
 @pytest.mark.parametrize(
@@ -115,7 +115,7 @@ def test_get_all_contrib_dates_start_after_end_date():
     res = recreate.get_all_contib_dates(
         "dummy", today + datetime.timedelta(days=1), today, "dummy_key"
     )
-    assert res == []
+    assert not res
     assert not responses.calls
 
 
