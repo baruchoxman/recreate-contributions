@@ -1,6 +1,7 @@
 import datetime
 import pytest
 import responses
+from typing import Any, Dict, List
 
 import recreate
 
@@ -24,7 +25,7 @@ import recreate
         ),
     ],
 )
-def test_commit(shell, expected):
+def test_commit(shell: recreate.Shells, expected: str) -> None:
     test_date = datetime.date(2020, 1, 1)
     res = recreate.commit(test_date, shell)
     assert res == expected
@@ -78,7 +79,7 @@ def test_commit(shell, expected):
         ),
     ],
 )
-def test_fake_it(shell, expected):
+def test_fake_it(shell: recreate.Shells, expected: str) -> None:
     test_date1 = datetime.date(2020, 1, 1)
     test_date2 = datetime.date(2020, 1, 2)
     test_date3 = datetime.date(2020, 1, 3)
@@ -91,7 +92,7 @@ def test_fake_it(shell, expected):
     assert res == expected
 
 
-def test_get_contrib_dates_from_query_res():
+def test_get_contrib_dates_from_query_res() -> None:
     query_result = _get_query_result_mock(datetime.date(2013, 4, 1), 10)
     expected_result = [
         (datetime.date(2013, 4, 1), 0),
@@ -110,7 +111,7 @@ def test_get_contrib_dates_from_query_res():
 
 
 @responses.activate
-def test_get_all_contrib_dates_start_after_end_date():
+def test_get_all_contrib_dates_start_after_end_date() -> None:
     today = datetime.date.today()
     res = recreate.get_all_contib_dates(
         "dummy", today + datetime.timedelta(days=1), today, "dummy_key"
@@ -120,7 +121,7 @@ def test_get_all_contrib_dates_start_after_end_date():
 
 
 @responses.activate
-def test_get_all_contrib_dates_same_start_and_end_date():
+def test_get_all_contrib_dates_same_start_and_end_date() -> None:
     test_date = datetime.date(2020, 1, 1)
     query_result = _get_query_result_mock(test_date, 1)
     responses.add(responses.POST, recreate.QUERY_API_URL, status=200, json=query_result)
@@ -130,7 +131,7 @@ def test_get_all_contrib_dates_same_start_and_end_date():
 
 
 @responses.activate
-def test_get_all_contrib_dates_one_chunk():
+def test_get_all_contrib_dates_one_chunk() -> None:
     test_date = datetime.date(2020, 1, 1)
     query_result = _get_query_result_mock(
         test_date, recreate.CONTRIB_DATES_DELTA_IN_DAYS
@@ -148,7 +149,7 @@ def test_get_all_contrib_dates_one_chunk():
 
 
 @responses.activate
-def test_get_all_contrib_dates_two_chunks():
+def test_get_all_contrib_dates_two_chunks() -> None:
     test_date = datetime.date(2020, 1, 1)
     query_result1 = _get_query_result_mock(
         test_date, recreate.CONTRIB_DATES_DELTA_IN_DAYS
@@ -173,7 +174,7 @@ def test_get_all_contrib_dates_two_chunks():
 
 
 @responses.activate
-def test_get_all_contrib_dates_with_exception():
+def test_get_all_contrib_dates_with_exception() -> None:
     test_date = datetime.date.today()
     responses.add(responses.POST, recreate.QUERY_API_URL, status=401, json={})
     with pytest.raises(Exception) as exc_info:
@@ -189,7 +190,7 @@ def test_get_all_contrib_dates_with_exception():
     assert len(responses.calls) == 1
 
 
-def _get_query_result_mock(start_date, num_of_dates):
+def _get_query_result_mock(start_date: datetime.date, num_of_dates: int) -> Any:
     return {
         "data": {
             "user": {
@@ -204,7 +205,9 @@ def _get_query_result_mock(start_date, num_of_dates):
     }
 
 
-def _get_weeks(start_date, num_of_dates):
+def _get_weeks(
+    start_date: datetime.date, num_of_dates: int
+) -> List[Dict[str, List[Dict[str, Any]]]]:
     weeks = []
 
     for week in range(0, num_of_dates // 7 + 1):
