@@ -32,6 +32,9 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint *.py tests
+      - name: Lint with mypy
+        run: |
+          mypy .
       - name: Lint with black
         uses: psf/black@stable
       - name: Test with pytest
