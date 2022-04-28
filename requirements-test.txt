@@ -5,6 +5,7 @@ flake8-builtins
 flake8-comprehensions
 flake8-mutable
 mypy
+pre-commit
 pycodestyle
 pylint
 pytest

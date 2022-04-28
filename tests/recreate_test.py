@@ -114,7 +114,10 @@ def test_get_contrib_dates_from_query_res() -> None:
 def test_get_all_contrib_dates_start_after_end_date() -> None:
     today = datetime.date.today()
     res = recreate.get_all_contib_dates(
-        "dummy", today + datetime.timedelta(days=1), today, "dummy_key"
+        "dummy",
+        today + datetime.timedelta(days=1),
+        today,
+        "dummy_key",
     )
     assert not res
     assert not responses.calls
@@ -134,7 +137,8 @@ def test_get_all_contrib_dates_same_start_and_end_date() -> None:
 def test_get_all_contrib_dates_one_chunk() -> None:
     test_date = datetime.date(2020, 1, 1)
     query_result = _get_query_result_mock(
-        test_date, recreate.CONTRIB_DATES_DELTA_IN_DAYS
+        test_date,
+        recreate.CONTRIB_DATES_DELTA_IN_DAYS,
     )
     responses.add(responses.POST, recreate.QUERY_API_URL, status=200, json=query_result)
 
@@ -152,16 +156,24 @@ def test_get_all_contrib_dates_one_chunk() -> None:
 def test_get_all_contrib_dates_two_chunks() -> None:
     test_date = datetime.date(2020, 1, 1)
     query_result1 = _get_query_result_mock(
-        test_date, recreate.CONTRIB_DATES_DELTA_IN_DAYS
+        test_date,
+        recreate.CONTRIB_DATES_DELTA_IN_DAYS,
     )
     query_result2 = _get_query_result_mock(
-        test_date + datetime.timedelta(recreate.CONTRIB_DATES_DELTA_IN_DAYS), 5
+        test_date + datetime.timedelta(recreate.CONTRIB_DATES_DELTA_IN_DAYS),
+        5,
     )
     responses.add(
-        responses.POST, recreate.QUERY_API_URL, status=200, json=query_result1
+        responses.POST,
+        recreate.QUERY_API_URL,
+        status=200,
+        json=query_result1,
     )
     responses.add(
-        responses.POST, recreate.QUERY_API_URL, status=200, json=query_result2
+        responses.POST,
+        recreate.QUERY_API_URL,
+        status=200,
+        json=query_result2,
     )
     res = recreate.get_all_contib_dates(
         "dummy",
@@ -185,7 +197,7 @@ def test_get_all_contrib_dates_with_exception() -> None:
             "dummy_key",
         )
     assert str(exc_info.value).startswith(
-        "Query failed to run by returning code of 401."
+        "Query failed to run by returning code of 401.",
     )
     assert len(responses.calls) == 1
 
@@ -198,15 +210,16 @@ def _get_query_result_mock(start_date: datetime.date, num_of_dates: int) -> Any:
                     "contributionCalendar": {
                         "totalContributions": num_of_dates * (num_of_dates - 1) / 2,
                         "weeks": _get_weeks(start_date, num_of_dates),
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        },
     }
 
 
 def _get_weeks(
-    start_date: datetime.date, num_of_dates: int
+    start_date: datetime.date,
+    num_of_dates: int,
 ) -> List[Dict[str, List[Dict[str, Any]]]]:
     weeks = []
 
@@ -218,7 +231,7 @@ def _get_weeks(
                 {
                     "date": (start_date + datetime.timedelta(days=day_num)).isoformat(),
                     "contributionCount": day_num,
-                }
+                },
             )
         weeks.append({"contributionDays": days})
 

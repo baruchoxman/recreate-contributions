@@ -49,7 +49,7 @@ def run_github_query(query: str, api_key: str) -> Any:
     request = requests.post(QUERY_API_URL, json={"query": query}, headers=headers)
     if request.status_code != 200:
         raise Exception(
-            f"Query failed to run by returning code of {request.status_code}. {query}"
+            f"Query failed to run by returning code of {request.status_code}. {query}",
         )
     return request.json()
 
@@ -184,14 +184,17 @@ def recreate_contibutions(
     save(output, output_filename)
     print(f"{output_filename} saved.")
     print(
-        f"Create a new(!) repo named {repo} at {GITHUB_BASE_URL} and run the generated script"
+        f"Create a new(!) repo named {repo} at {GITHUB_BASE_URL} and run the generated script",
     )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Recreate contributions")
     parser.add_argument(
-        "-u", "--username", required=True, help="GitHub username to update"
+        "-u",
+        "--username",
+        required=True,
+        help="GitHub username to update",
     )
     parser.add_argument(
         "-s",

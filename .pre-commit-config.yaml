@@ -7,6 +7,7 @@ repos:
     -   id: check-json
     -   id: check-merge-conflict
     -   id: check-yaml
+    -   id: debug-statements
     -   id: detect-private-key
     -   id: end-of-file-fixer
     -   id: fix-byte-order-marker
@@ -14,11 +15,28 @@ repos:
     -   id: name-tests-test
     -   id: requirements-txt-fixer
     -   id: trailing-whitespace
+-   repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.20.1
+    hooks:
+    -   id: setup-cfg-fmt
+-   repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.2.3
+    hooks:
+    -   id: add-trailing-comma
 -   repo: https://github.com/psf/black
-    rev: stable
+    rev: 22.3.0
     hooks:
     -   id: black
+-   repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.6.0
+    hooks:
+    -   id: autopep8
+-   repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+    -   id: flake8
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.950
     hooks:
     -   id: mypy
+        additional_dependencies: [types-all]
