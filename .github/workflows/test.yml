@@ -23,17 +23,12 @@ jobs:
       - name: Install dependencies for testing
         run: |
           if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
-      - name: Lint with flake8
+      - name: Verify all pre-commit hooks
         run: |
-          flake8 . --count --show-source --statistics
+          pre-commit run --all-files
       - name: Lint with pylint
         run: |
           pylint *.py tests
-      - name: Lint with mypy
-        run: |
-          mypy .
-      - name: Lint with black
-        uses: psf/black@stable
       - name: Test with pytest
         run: |
           pytest --cov=. --cov-branch --cov-report=xml
