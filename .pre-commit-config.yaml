@@ -4,8 +4,12 @@ repos:
     hooks:
     -   id: check-added-large-files
     -   id: check-executables-have-shebangs
+    -   id: check-case-conflict
     -   id: check-json
     -   id: check-merge-conflict
+    -   id: check-symlinks
+    -   id: check-toml
+    -   id: check-xml
     -   id: check-yaml
     -   id: debug-statements
     -   id: detect-private-key
@@ -15,10 +19,25 @@ repos:
     -   id: name-tests-test
     -   id: requirements-txt-fixer
     -   id: trailing-whitespace
+        types: [python]
 -   repo: https://github.com/asottile/setup-cfg-fmt
     rev: v1.20.1
     hooks:
     -   id: setup-cfg-fmt
+-   repo: https://github.com/hadialqattan/pycln
+    rev: v1.2.5
+    hooks:
+    -   id: pycln
+        args: ["--all"]
+-   repo: https://github.com/asottile/yesqa
+    rev: v1.3.0
+    hooks:
+    -   id: yesqa
+-   repo: https://github.com/pycqa/isort
+    rev: "5.10.1"
+    hooks:
+    -   id: isort
+        args: ["--profile", "black"]
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.3
     hooks:

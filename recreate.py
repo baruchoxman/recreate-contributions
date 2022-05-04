@@ -4,8 +4,8 @@ import enum
 import os
 import platform
 from typing import Any, Iterator, List, Tuple
-import requests
 
+import requests
 
 GITHUB_BASE_URL = "https://github.com/"
 GIT_URL = "git@github.com"
