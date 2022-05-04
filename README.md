@@ -2,6 +2,7 @@
 
 [![GitHub Actions](https://github.com/baruchoxman/recreate-contributions/actions/workflows/test.yml/badge.svg)](https://github.com/baruchoxman/recreate-contributions/actions)
 [![GitHub Actions](https://codecov.io/gh/baruchoxman/recreate-contributions/branch/main/graph/badge.svg)](https://codecov.io/gh/baruchoxman/recreate-contributions)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black")
 
 ### Description
 
