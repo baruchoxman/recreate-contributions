@@ -1,96 +1,101 @@
+---
 ci:
     autofix_commit_msg: |
         [pre-commit.ci] auto fixes from pre-commit.com hooks
 
         for more information, see https://pre-commit.ci
     autofix_prs: true
-    autoupdate_branch: ''
-    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+    autoupdate_branch: ""
+    autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
     autoupdate_schedule: weekly
     skip: [pylint]
     submodules: false
 
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.2.0
-    hooks:
-    -   id: check-added-large-files
-    -   id: check-executables-have-shebangs
-    -   id: check-case-conflict
-    -   id: check-json
-    -   id: check-merge-conflict
-    -   id: check-symlinks
-    -   id: check-toml
-    -   id: check-xml
-    -   id: check-yaml
-    -   id: debug-statements
-    -   id: detect-private-key
-    -   id: end-of-file-fixer
-    -   id: fix-byte-order-marker
-    -   id: mixed-line-ending
-    -   id: name-tests-test
-    -   id: requirements-txt-fixer
-    -   id: trailing-whitespace
-        types: [python]
--   repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.20.1
-    hooks:
-    -   id: setup-cfg-fmt
--   repo: https://github.com/hadialqattan/pycln
-    rev: v1.2.5
-    hooks:
-    -   id: pycln
-        args: ["--all"]
--   repo: https://github.com/asottile/yesqa
-    rev: v1.3.0
-    hooks:
-    -   id: yesqa
--   repo: https://github.com/pycqa/isort
-    rev: "5.10.1"
-    hooks:
-    -   id: isort
-        args: ["--profile", "black"]
--   repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.2.3
-    hooks:
-    -   id: add-trailing-comma
--   repo: https://github.com/asottile/pyupgrade
-    rev: v2.32.0
-    hooks:
-    -   id: pyupgrade
--   repo: local
-    hooks:
-    -   id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
--   repo: https://github.com/psf/black
-    rev: 22.3.0
-    hooks:
-    -   id: black
--   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.6.0
-    hooks:
-    -   id: autopep8
--   repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
-    hooks:
-    -   id: flake8
-        additional_dependencies: [
-            flake8-assertive,
-            flake8-bugbear,
-            flake8-builtins,
-            flake8-comprehensions,
-            flake8-mutable,
-        ]
-
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.950
-    hooks:
-    -   id: mypy
-        additional_dependencies: [types-all]
--   repo: meta
-    hooks:
-    # -   id: check-hooks-apply
-    -   id: check-useless-excludes
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.2.0
+      hooks:
+          - id: check-added-large-files
+          - id: check-executables-have-shebangs
+          - id: check-case-conflict
+          - id: check-json
+          - id: check-merge-conflict
+          - id: check-symlinks
+          - id: check-toml
+          - id: check-xml
+          - id: check-yaml
+          - id: debug-statements
+          - id: detect-private-key
+          - id: end-of-file-fixer
+          - id: fix-byte-order-marker
+          - id: mixed-line-ending
+          - id: name-tests-test
+          - id: requirements-txt-fixer
+          - id: trailing-whitespace
+            types: [python]
+    - repo: https://github.com/asottile/setup-cfg-fmt
+      rev: v1.20.1
+      hooks:
+          - id: setup-cfg-fmt
+    - repo: https://github.com/hadialqattan/pycln
+      rev: v1.2.5
+      hooks:
+          - id: pycln
+            args: ["--all"]
+    - repo: https://github.com/asottile/yesqa
+      rev: v1.3.0
+      hooks:
+          - id: yesqa
+    - repo: https://github.com/pycqa/isort
+      rev: "5.10.1"
+      hooks:
+          - id: isort
+            args: ["--profile", "black"]
+    - repo: https://github.com/asottile/add-trailing-comma
+      rev: v2.2.3
+      hooks:
+          - id: add-trailing-comma
+    - repo: https://github.com/asottile/pyupgrade
+      rev: v2.32.0
+      hooks:
+          - id: pyupgrade
+    - repo: local
+      hooks:
+          - id: pylint
+            name: pylint
+            entry: pylint
+            language: system
+            types: [python]
+    - repo: https://github.com/psf/black
+      rev: 22.3.0
+      hooks:
+          - id: black
+    - repo: https://github.com/pre-commit/mirrors-autopep8
+      rev: v1.6.0
+      hooks:
+          - id: autopep8
+    - repo: https://github.com/PyCQA/flake8
+      rev: 4.0.1
+      hooks:
+          - id: flake8
+            additional_dependencies:
+                [
+                    flake8-assertive,
+                    flake8-bugbear,
+                    flake8-builtins,
+                    flake8-comprehensions,
+                    flake8-mutable,
+                ]
+    - repo: https://github.com/adrienverge/yamllint
+      rev: "v1.26.3"
+      hooks:
+          - id: yamllint
+    - repo: https://github.com/pre-commit/mirrors-mypy
+      rev: v0.950
+      hooks:
+          - id: mypy
+            additional_dependencies: [types-all]
+    - repo: meta
+      hooks:
+          # -   id: check-hooks-apply
+          - id: check-useless-excludes
