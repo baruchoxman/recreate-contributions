@@ -237,3 +237,22 @@ def _get_weeks(
         weeks.append({"contributionDays": days})
 
     return weeks
+
+
+def test_parse_args() -> None:
+    args = [
+        "-u",
+        "testuser",
+        "-s",
+        "sourceuser",
+        "-d",
+        "2022-01-20",
+        "--apitoken",
+        "<token>",
+    ]
+    parsed_args = recreate.parse_args(args)
+    assert parsed_args.username == "testuser"
+    assert parsed_args.source == "sourceuser"
+    assert parsed_args.date == datetime.date(2022, 1, 20)
+    assert parsed_args.apitoken == "<token>"
+    assert parsed_args.repo is None

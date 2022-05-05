@@ -3,6 +3,7 @@ import datetime
 import enum
 import os
 import platform
+import sys
 from typing import Any, Iterator, List, Tuple
 
 import requests
@@ -165,7 +166,7 @@ def save(output: str, filename: str) -> None:
 def recreate_contibutions(
     current_username: str,
     username_to_copy_from: str,
-    start_date: str,
+    start_date: datetime.date,
     api_token: str,
     repo: str,
 ) -> None:
@@ -173,7 +174,7 @@ def recreate_contibutions(
 
     contrib_dates = get_all_contib_dates(
         username_to_copy_from,
-        datetime.date.fromisoformat(start_date),
+        start_date,
         datetime.date.today(),
         api_token,
     )
@@ -188,7 +189,7 @@ def recreate_contibutions(
     )
 
 
-def main() -> None:
+def parse_args(args: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Recreate contributions")
     parser.add_argument(
         "-u",
@@ -206,6 +207,7 @@ def main() -> None:
         "-d",
         "--date",
         required=True,
+        type=datetime.date.fromisoformat,
         help="Start date for copying contributions (YYYY-MM-DD)",
     )
     parser.add_argument(
@@ -219,8 +221,13 @@ def main() -> None:
         "--repo",
         help='Repository to use (will use "contrib-copy-<source username>" if not provided',
     )
-    arguments = parser.parse_args()
+    arguments = parser.parse_args(args)
 
+    return arguments
+
+
+def main() -> None:
+    arguments = parse_args(sys.argv[1:])
     recreate_contibutions(
         arguments.username,
         arguments.source,
