@@ -44,7 +44,7 @@ jobs:
           pylint *.py tests
       - name: Test with pytest
         run: |
-          pytest --cov=. --cov-branch --cov-report=xml
+          pytest --cov=.
       - name: Codecov
         uses: codecov/codecov-action@v2
         with:
