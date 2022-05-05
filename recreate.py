@@ -183,7 +183,7 @@ def recreate_contibutions(
         print("Did not find any data to recreate")
         return
 
-    print(f"Found data from {len(contrib_dates)} to recreate")
+    print(f"Found data from {len(contrib_dates)} dates to recreate")
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 

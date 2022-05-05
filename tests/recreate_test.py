@@ -268,7 +268,27 @@ def test_recreate_contibutions_no_dates() -> None:
             "<token>",
             "dummyrepo",
         )
-        assert save_patch.not_called()
+        save_patch.assert_not_called()
+
+
+@responses.activate
+def test_recreate_contibutions_with_dates() -> None:
+    responses.add(
+        responses.POST,
+        recreate.QUERY_API_URL,
+        status=200,
+        json=_get_query_result_mock(datetime.date(2022, 1, 20), 10),
+    )
+
+    with mock.patch("recreate.save") as save_patch:
+        recreate.recreate_contibutions(
+            "testuser",
+            "sourceuser",
+            datetime.date(2022, 1, 20),
+            "<token>",
+            "dummyrepo",
+        )
+        save_patch.assert_called_once()
 
 
 def test_parse_args() -> None:
