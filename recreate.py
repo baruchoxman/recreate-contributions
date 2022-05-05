@@ -179,6 +179,12 @@ def recreate_contibutions(
         api_token,
     )
 
+    if not contrib_dates:
+        print("Did not find any data to recreate")
+        return
+
+    print(f"Found data from {len(contrib_dates)} to recreate")
+
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 
     output_filename = f"recreate_contributions.{SHELL_SUFFIX[SHELL]}"

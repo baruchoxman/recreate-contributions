@@ -1,6 +1,7 @@
 import datetime
 from typing import Any, Dict, List
 
+import mock
 import pytest
 import responses
 
@@ -237,6 +238,37 @@ def _get_weeks(
         weeks.append({"contributionDays": days})
 
     return weeks
+
+
+@responses.activate
+def test_recreate_contibutions_no_dates() -> None:
+    responses.add(
+        responses.POST,
+        recreate.QUERY_API_URL,
+        status=200,
+        json={
+            "data": {
+                "user": {
+                    "contributionsCollection": {
+                        "contributionCalendar": {
+                            "totalContributions": 0,
+                            "weeks": [],
+                        },
+                    },
+                },
+            },
+        },
+    )
+
+    with mock.patch("recreate.save") as save_patch:
+        recreate.recreate_contibutions(
+            "testuser",
+            "sourceuser",
+            datetime.date(2022, 1, 20),
+            "<token>",
+            "dummyrepo",
+        )
+        assert save_patch.not_called()
 
 
 def test_parse_args() -> None:

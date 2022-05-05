@@ -4,6 +4,7 @@ flake8-bugbear
 flake8-builtins
 flake8-comprehensions
 flake8-mutable
+mock
 mypy
 pre-commit
 pycodestyle
