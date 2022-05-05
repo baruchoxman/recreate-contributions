@@ -44,6 +44,8 @@ SHELL_SUFFIX = {
 }
 SHELL = Shells.POWERSHELL if platform.system() == "Windows" else Shells.BASH
 
+RECREATE_SCRIPT_FILENAME = f"recreate_contributions.{SHELL_SUFFIX[SHELL]}"
+
 
 def run_github_query(query: str, api_key: str) -> Any:
     headers = {"Authorization": f"Bearer {api_key}"}
@@ -187,7 +189,7 @@ def recreate_contibutions(
 
     output = fake_it(contrib_dates, current_username, repo, SHELL)
 
-    output_filename = f"recreate_contributions.{SHELL_SUFFIX[SHELL]}"
+    output_filename = RECREATE_SCRIPT_FILENAME
     save(output, output_filename)
     print(f"{output_filename} saved.")
     print(

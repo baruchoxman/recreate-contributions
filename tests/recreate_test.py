@@ -1,4 +1,5 @@
 import datetime
+import os
 from typing import Any, Dict, List
 
 import mock
@@ -272,7 +273,7 @@ def test_recreate_contibutions_no_dates() -> None:
 
 
 @responses.activate
-def test_recreate_contibutions_with_dates() -> None:
+def test_recreate_contibutions_with_dates(tmpdir: pytest.fixture) -> None:
     responses.add(
         responses.POST,
         recreate.QUERY_API_URL,
@@ -280,7 +281,9 @@ def test_recreate_contibutions_with_dates() -> None:
         json=_get_query_result_mock(datetime.date(2022, 1, 20), 10),
     )
 
-    with mock.patch("recreate.save") as save_patch:
+    test_file_name = tmpdir.join(recreate.RECREATE_SCRIPT_FILENAME)
+    with mock.patch.object(recreate, "RECREATE_SCRIPT_FILENAME", test_file_name):
+        assert not os.path.isfile(test_file_name)
         recreate.recreate_contibutions(
             "testuser",
             "sourceuser",
@@ -288,7 +291,7 @@ def test_recreate_contibutions_with_dates() -> None:
             "<token>",
             "dummyrepo",
         )
-        save_patch.assert_called_once()
+        assert os.path.isfile(test_file_name)
 
 
 def test_parse_args() -> None:
