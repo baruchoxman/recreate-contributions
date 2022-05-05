@@ -2,6 +2,7 @@
 
 [![GitHub Actions](https://github.com/baruchoxman/recreate-contributions/actions/workflows/test.yml/badge.svg)](https://github.com/baruchoxman/recreate-contributions/actions)
 [![GitHub Actions](https://codecov.io/gh/baruchoxman/recreate-contributions/branch/main/graph/badge.svg)](https://codecov.io/gh/baruchoxman/recreate-contributions)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/baruchoxman/recreate-contributions/main.svg)](https://results.pre-commit.ci/latest/github/baruchoxman/recreate-contributions/main)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black")
 
 ### Description
