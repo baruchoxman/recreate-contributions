@@ -311,3 +311,6 @@ def test_parse_args() -> None:
     assert parsed_args.date == datetime.date(2022, 1, 20)
     assert parsed_args.apitoken == "<token>"
     assert parsed_args.repo is None
+
+
+# Add test case for recreate.parse_args
