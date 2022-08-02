@@ -34,11 +34,11 @@ repos:
           - id: trailing-whitespace
             types: [python]
     - repo: https://github.com/asottile/setup-cfg-fmt
-      rev: v1.20.2
+      rev: v2.0.0
       hooks:
           - id: setup-cfg-fmt
     - repo: https://github.com/hadialqattan/pycln
-      rev: v2.0.4
+      rev: v2.1.1
       hooks:
           - id: pycln
             args: ["--all"]
@@ -64,7 +64,7 @@ repos:
       hooks:
           - id: add-trailing-comma
     - repo: https://github.com/asottile/pyupgrade
-      rev: v2.37.2
+      rev: v2.37.3
       hooks:
           - id: pyupgrade
     - repo: local
@@ -83,7 +83,7 @@ repos:
       hooks:
           - id: autopep8
     - repo: https://github.com/PyCQA/flake8
-      rev: 4.0.1
+      rev: 5.0.2
       hooks:
           - id: flake8
             additional_dependencies:
