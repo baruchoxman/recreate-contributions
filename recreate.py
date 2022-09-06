@@ -49,7 +49,12 @@ RECREATE_SCRIPT_FILENAME = f"recreate_contributions.{SHELL_SUFFIX[SHELL]}"
 
 def run_github_query(query: str, api_key: str) -> Any:
     headers = {"Authorization": f"Bearer {api_key}"}
-    request = requests.post(QUERY_API_URL, json={"query": query}, headers=headers)
+    request = requests.post(
+        QUERY_API_URL,
+        json={"query": query},
+        headers=headers,
+        timeout=10,
+    )
     if request.status_code != 200:
         raise Exception(
             f"Query failed to run by returning code of {request.status_code}. {query}",
