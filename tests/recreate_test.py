@@ -2,7 +2,7 @@ import datetime
 import os
 from typing import Any, Dict, List
 
-import mock
+from unittest import mock
 import pytest
 import responses
 
