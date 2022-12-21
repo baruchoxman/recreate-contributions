@@ -55,7 +55,7 @@ repos:
                     flake8-mutable,
                 ]
     - repo: https://github.com/pycqa/isort
-      rev: "5.11.1"
+      rev: "v5.11.3"
       hooks:
           - id: isort
             args: ["--profile", "black"]
@@ -79,7 +79,7 @@ repos:
       hooks:
           - id: black
     - repo: https://github.com/pre-commit/mirrors-autopep8
-      rev: v2.0.0
+      rev: v2.0.1
       hooks:
           - id: autopep8
     - repo: https://github.com/PyCQA/flake8
