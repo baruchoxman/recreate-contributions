@@ -56,7 +56,7 @@ def run_github_query(query: str, api_key: str) -> Any:
         timeout=10,
     )
     if request.status_code != 200:
-        raise Exception(
+        raise Exception(  # pylint: disable=broad-exception-raised
             f"Query failed to run by returning code of {request.status_code}. {query}",
         )
     return request.json()
