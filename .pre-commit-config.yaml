@@ -38,7 +38,7 @@ repos:
       hooks:
           - id: setup-cfg-fmt
     - repo: https://github.com/hadialqattan/pycln
-      rev: v2.1.6
+      rev: v2.2.1
       hooks:
           - id: pycln
             args: ["--all"]
@@ -60,11 +60,11 @@ repos:
           - id: isort
             args: ["--profile", "black"]
     - repo: https://github.com/asottile/add-trailing-comma
-      rev: v3.0.0
+      rev: v3.0.1
       hooks:
           - id: add-trailing-comma
     - repo: https://github.com/asottile/pyupgrade
-      rev: v3.9.0
+      rev: v3.10.1
       hooks:
           - id: pyupgrade
     - repo: local
@@ -83,7 +83,7 @@ repos:
       hooks:
           - id: autopep8
     - repo: https://github.com/PyCQA/flake8
-      rev: 6.0.0
+      rev: 6.1.0
       hooks:
           - id: flake8
             additional_dependencies:
