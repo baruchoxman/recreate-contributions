@@ -79,11 +79,11 @@ repos:
       hooks:
           - id: black
     - repo: https://github.com/hhatto/autopep8
-      rev: v2.2.0
+      rev: v2.3.0
       hooks:
           - id: autopep8
     - repo: https://github.com/PyCQA/flake8
-      rev: 7.0.0
+      rev: 7.1.0
       hooks:
           - id: flake8
             additional_dependencies:
@@ -108,7 +108,7 @@ repos:
           # -   id: check-hooks-apply
           - id: check-useless-excludes
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.28.4
+      rev: 0.28.5
       hooks:
           - id: check-github-actions
           - id: check-github-workflows
