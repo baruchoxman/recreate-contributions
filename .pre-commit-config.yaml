@@ -99,7 +99,7 @@ repos:
       hooks:
           - id: yamllint
     - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v1.11.1
+      rev: v1.11.2
       hooks:
           - id: mypy
             additional_dependencies: [types-requests]
@@ -108,7 +108,7 @@ repos:
           # -   id: check-hooks-apply
           - id: check-useless-excludes
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.29.1
+      rev: 0.29.2
       hooks:
           - id: check-github-actions
           - id: check-github-workflows
