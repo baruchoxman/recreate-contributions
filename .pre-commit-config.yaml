@@ -34,7 +34,7 @@ repos:
           - id: trailing-whitespace
             types: [python]
     - repo: https://github.com/crate-ci/typos
-      rev: dictgen-v0.3.1
+      rev: v1
       hooks:
           - id: typos
     - repo: https://github.com/codespell-project/codespell
@@ -116,7 +116,7 @@ repos:
           # -   id: check-hooks-apply
           - id: check-useless-excludes
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.33.1
+      rev: 0.33.2
       hooks:
           - id: check-github-actions
           - id: check-github-workflows
