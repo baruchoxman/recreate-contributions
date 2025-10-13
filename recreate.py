@@ -170,7 +170,7 @@ def save(output: str, filename: str) -> None:
     os.chmod(filename, 0o755)  # add execute permissions
 
 
-def recreate_contibutions(
+def recreate_contributions(
     current_username: str,
     username_to_copy_from: str,
     start_date: datetime.date,
@@ -241,7 +241,7 @@ def parse_args(args: List[str]) -> argparse.Namespace:
 
 def main() -> None:
     arguments = parse_args(sys.argv[1:])
-    recreate_contibutions(
+    recreate_contributions(
         arguments.username,
         arguments.source,
         arguments.date,
