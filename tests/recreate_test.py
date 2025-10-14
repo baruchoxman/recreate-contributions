@@ -242,7 +242,7 @@ def _get_weeks(
 
 
 @responses.activate
-def test_recreate_contibutions_no_dates() -> None:
+def test_recreate_contributions_no_dates() -> None:
     responses.add(
         responses.POST,
         recreate.QUERY_API_URL,
@@ -262,7 +262,7 @@ def test_recreate_contibutions_no_dates() -> None:
     )
 
     with mock.patch("recreate.save") as save_patch:
-        recreate.recreate_contibutions(
+        recreate.recreate_contributions(
             "testuser",
             "sourceuser",
             datetime.date(2022, 1, 20),
@@ -273,7 +273,7 @@ def test_recreate_contibutions_no_dates() -> None:
 
 
 @responses.activate
-def test_recreate_contibutions_with_dates(tmpdir: pytest.fixture) -> None:
+def test_recreate_contributions_with_dates(tmpdir: pytest.fixture) -> None:
     responses.add(
         responses.POST,
         recreate.QUERY_API_URL,
@@ -284,7 +284,7 @@ def test_recreate_contibutions_with_dates(tmpdir: pytest.fixture) -> None:
     test_file_name = tmpdir.join(recreate.RECREATE_SCRIPT_FILENAME)
     with mock.patch.object(recreate, "RECREATE_SCRIPT_FILENAME", test_file_name):
         assert not os.path.isfile(test_file_name)
-        recreate.recreate_contibutions(
+        recreate.recreate_contributions(
             "testuser",
             "sourceuser",
             datetime.date(2022, 1, 20),
