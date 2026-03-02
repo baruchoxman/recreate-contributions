@@ -42,7 +42,7 @@ repos:
       hooks:
           - id: codespell
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.15.1
+      rev: v0.15.4
       hooks:
           - id: ruff-check
           - id: ruff-format
@@ -68,7 +68,7 @@ repos:
                     flake8-mutable,
                 ]
     - repo: https://github.com/pycqa/isort
-      rev: "7.0.0"
+      rev: "8.0.1"
       hooks:
           - id: isort
             args: ["--profile", "black"]
@@ -121,7 +121,7 @@ repos:
           # -   id: check-hooks-apply
           - id: check-useless-excludes
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.36.2
+      rev: 0.37.0
       hooks:
           - id: check-github-actions
           - id: check-github-workflows
