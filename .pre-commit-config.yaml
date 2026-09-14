@@ -42,7 +42,7 @@ repos:
       hooks:
           - id: codespell
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.16.0
+      rev: v0.16.7
       hooks:
           - id: ruff-check
           - id: ruff-format
@@ -68,7 +68,7 @@ repos:
                     flake8-mutable,
                 ]
     - repo: https://github.com/pycqa/isort
-      rev: "9.0.0b1"
+      rev: "9.0.1"
       hooks:
           - id: isort
             args: ["--profile", "black"]
@@ -112,7 +112,7 @@ repos:
       hooks:
           - id: yamllint
     - repo: https://github.com/pre-commit/mirrors-mypy
-      rev: v2.3.0
+      rev: v2.3.1
       hooks:
           - id: mypy
             additional_dependencies: [types-requests]
@@ -121,7 +121,7 @@ repos:
           # -   id: check-hooks-apply
           - id: check-useless-excludes
     - repo: https://github.com/python-jsonschema/check-jsonschema
-      rev: 0.37.4
+      rev: 0.38.0
       hooks:
           - id: check-github-actions
           - id: check-github-workflows
